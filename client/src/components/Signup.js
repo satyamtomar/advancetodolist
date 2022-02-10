@@ -1,24 +1,61 @@
-import React from 'react';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+const Signup = (props) => {
+  const [credential, setcredential] = useState({
+    name: "",
+    email: "",
+    password: "",
+    cpassword: "",
+  });
+  let history = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { name, email, password } = credential;
 
-const Signup = () => {
-  return <div>
+    const response = await fetch("http://localhost:5000/api/auth/createuser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify({ name, email, password }),
+    });
+    const json = await response.json();
 
-<div className="flex flex-row md:pt-28 pt-10 mx-auto justify-center ">
-    <div className="border-2 border-gray-500 rounded-lg px-7 py-7 shadow-lg shadow-cyan-500/100 justify-center text-gray-200 bg-gray-500">
+    console.log(json);
+    if (json.success) {
+      //save the auth token and redirect it
+      localStorage.setItem("token", json.authtoken);
+      history("/");
+      props.showAlert("Account successfully created", "success");
+    } else {
+      props.showAlert("Invalid details", "danger");
+    }
+  };
+
+  const onChange = (e) => {
+    setcredential({ ...credential, [e.target.name]: e.target.value });
+  };
+
+  return (
+    <div className="flex flex-row md:pt-28 pt-10 mx-auto justify-center ">
+    <div className="bg-gray-500 border-3 border-gray-200 rounded-lg px-7 py-7 shadow-md shadow-cyan-500/100 justify-center text-gray-200">
      <div className="flex flex-row justify-center">
     <h1 className="py-2 text-4xl">Sign up </h1>
     </div>
-      <form >
+      <form onSubmit={handleSubmit}>
         <div className="py-2 space-x-2 flex flex-row justify-between">
           <label htmlFor="name" >
             Name
           </label>
           <input
             type="text"
-            className="text-black"
+            
             id="name"
+            onChange={onChange}
             aria-describedby="emailHelp"
             name="name"
+            className="text-black"
           />
         </div>
         <div className="py-2 space-x-2 flex flex-row justify-between">
@@ -27,10 +64,12 @@ const Signup = () => {
           </label>
           <input
             type="email"
-            className="text-black"
+            
             name="email"
             id="email"
+            onChange={onChange}
             aria-describedby="emailHelp"
+            className="text-black"
           />
           
         </div>
@@ -41,10 +80,10 @@ const Signup = () => {
           <input
             type="password"
             className="text-black"
-            
+            onChange={onChange}
             id="password"
             name="password"
-            minLength={1}
+            
             required
           />
         </div>
@@ -55,10 +94,13 @@ const Signup = () => {
           </label>
           <input
             type="password"
-            className="text-black"
+            
+            onChange={onChange}
             id="cpassword"
             name="cpassword"
-            minLength={1}
+            className="text-black"
+            
+
             required
           />
         </div>
@@ -70,7 +112,7 @@ const Signup = () => {
       </form>
     </div>
     </div>
-  </div>;
+  );
 };
 
 export default Signup;

@@ -10,7 +10,7 @@ const Header = () => {
       localStorage.clear()
       console.log(localStorage.getItem('token'));
     setTimeout(() => {
-      history.push('/login')
+      history('/login')
     },1000)  
       
     }

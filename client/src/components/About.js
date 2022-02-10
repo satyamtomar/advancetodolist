@@ -20,7 +20,7 @@ const About = () => {
           <div>
             <Avatar
               style={{ width: "10vmax", height: "10vmax", margin: "2vmax 0" }}
-              src="satyamimg.jpg"
+              src="satyamimg.jpeg"
               alt="Founder"
             />
             <Typography>Satyam Tomar</Typography>
