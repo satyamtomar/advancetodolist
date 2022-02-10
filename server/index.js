@@ -14,6 +14,8 @@ app.use(express.json());
 //routes available
 
 app.use("/api/auth", require("./routes/auth"));
+app.use("/api/list", require("./routes/list"));
+
 
 app.get("/", (req, res) => {
   res.send("Hello Satyam");

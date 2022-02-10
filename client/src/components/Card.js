@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import EditTask from './EditTask'
-
-const Card = ({taskObj, index, deleteTask, updateListArray}) => {
+import {FaEdit} from 'react-icons/fa'
+import {MdDelete} from 'react-icons/md'
+import {BsCheckLg} from "react-icons/bs"
+const Card = ({taskObj, index, deleteTask, updateListArray,handlecheck}) => {
     const [modal, setModal] = useState(false);
 
     const colors = [
@@ -38,22 +40,24 @@ const Card = ({taskObj, index, deleteTask, updateListArray}) => {
     const handleDelete = () => {
         deleteTask(index)
     }
-
+    
     return (
-        <div className="">
-        <div class = "card-wrapper mr-5 ">
-            <div class = "card-top" style={{"background-color": colors[index%5].primaryColor}}></div>
-            <div class = "task-holder">
-                <span class = "card-header" style={{"background-color": colors[index%5].secondaryColor, "border-radius": "10px"}}>{taskObj.Name}</span>
-                <p className = "mt-3">{taskObj.Description}</p>
-
-                <div style={{"position": "absolute", "right" : "20px", "bottom" : "20px"}}>
-                    <i class = "far fa-edit mr-3" style={{"color" : colors[index%5].primaryColor, "cursor" : "pointer"}} onClick = {() => setModal(true)}></i>
-                    <i class="fas fa-trash-alt" style = {{"color" : colors[index%5].primaryColor, "cursor" : "pointer"}} onClick = {handleDelete}></i>
+        <div class = "card-wrapper mr-5 text-wrap my-2 ">
+            <div class = "card-top " style={{"background-color": colors[index%5].primaryColor}}></div>
+            <div class = "task-holder " style={{"word-wrap":"break-word"}}>
+            <div className="my-2 py-6   ">
+                <span class = "card-header " style={{"background-color": colors[index%5].secondaryColor, "border-radius": "10px"}}>{taskObj.title}</span>
+                <p className = "mt-3 " style={{"word-wrap":"break-word",}}>{taskObj.description}</p>
+                </div>   
+                <div style={{"position": "absolute", "right" : "20px", "bottom" : "20px" }} className="space-x-3 flex flex-row justify-between mt-3">
+                     {(!taskObj.checked)&&
+                        <BsCheckLg style={{"color":"green"}} onClick={handlecheck}></BsCheckLg>}
+                     
+                    <FaEdit class = "far fa-edit mr-3" style={{"color" : colors[index%5].primaryColor, "cursor" : "pointer"}} onClick = {() => setModal(true)}></FaEdit>
+                    <MdDelete class="fas fa-trash-alt" style = {{"color" : colors[index%5].primaryColor, "cursor" : "pointer"}} onClick = {handleDelete}></MdDelete>
                 </div>
         </div>
         <EditTask modal = {modal} toggle = {toggle} updateTask = {updateTask} taskObj = {taskObj}/>
-        </div>
         </div>
     );
 };
