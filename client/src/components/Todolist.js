@@ -147,13 +147,13 @@ setNotes(newnotes);
     <>
       <div className="header text-center">
         <h3>Todo List</h3>
-        <button className="btn btn-primary mt-2" onClick={() => setModal(true)}>
+        <button className="bg-gray-500 rounded-lg shadow-md shadow-sky-800/100 py-2 px-2 mt-2" onClick={() => setModal(true)}>
           Create Task
         </button>
       </div>
-      <div className="flex flex-row justify-center">
+      <div className="flex flex-row justify-center space-x-20 mb-2">
         <button
-          className="btn btn-primary "
+          className="bg-gray-500 rounded-lg shadow-md shadow-sky-800/100 py-2 px-2 "
           onClick={() => {
             settodotab(true);
           }}
@@ -161,7 +161,7 @@ setNotes(newnotes);
           todo
         </button>
         <button
-          className="btn btn-primary"
+          className="bg-gray-500 rounded-lg shadow-md shadow-sky-800/100 py-2 px-2   "
           onClick={() => {
             settodotab(false);
           }}
