@@ -79,7 +79,7 @@ setNotes(newnotes);
       },
     });
     const json = await response.json();
-         console.log(json)
+         console.log('del mdg',json)
     //  //console.log("deleting the node"+id);
     const newNotes = notes.filter((note) => {
       return note._id !== _id;

@@ -2,8 +2,8 @@ import React, { useState , useEffect} from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 const EditTaskPopup = ({modal, toggle, updateTask, taskObj}) => {
-    const [taskName, setTaskName] = useState('');
-    const [description, setDescription] = useState('');
+    const [taskName, setTaskName] = useState(taskObj.title);
+    const [description, setDescription] = useState(taskObj.description);
     
     const handleChange = (e) => {
         
@@ -12,15 +12,15 @@ const EditTaskPopup = ({modal, toggle, updateTask, taskObj}) => {
         if(name === "taskName"){
             setTaskName(value)
         }else{
-            setDescription(value)
         }
+        setDescription(value)
 
 
     }
 
     useEffect(() => {
-        setTaskName(taskObj.Name)
-        setDescription(taskObj.Description)
+        setTaskName(taskObj.title)
+        setDescription(taskObj.description)
     },[])
 
     const handleUpdate = (e) => {
@@ -48,8 +48,8 @@ const EditTaskPopup = ({modal, toggle, updateTask, taskObj}) => {
                 
             </ModalBody>
             <ModalFooter>
-            <Button color="primary" onClick={handleUpdate}>Update</Button>{' '}
-            <Button color="secondary" onClick={toggle}>Cancel</Button>
+            <Button className="bg-gray-500 text-gray-300" color="" onClick={handleUpdate}>Update</Button>{' '}
+            <Button className="bg-gray-500 text-gray-300" color="" onClick={toggle}>Cancel</Button>
             </ModalFooter>
       </Modal>
     );

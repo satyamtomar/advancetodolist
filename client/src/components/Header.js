@@ -45,6 +45,7 @@ const Header = () => {
               
                 <Link className="hover:text-gray-600 font-bold" to="/">Home</Link>
                 <Link className="hover:text-gray-600 font-bold" to="/about">About</Link>
+                <Link className="hover:text-gray-600 font-bold" to="/userinfo">User</Link>
                 
                 {localStorage.getItem('token')===null  ? 
                 <div className="flex flex-row space-x-3">

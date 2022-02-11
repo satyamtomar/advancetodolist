@@ -101,6 +101,7 @@ router.delete("/deletelist/:id", fetchuser, async (req, res) => {
   try {
     //Find the list to be deleted and delete it
     let list = await List.findById(req.params.id);
+    console.log("helloo delete",list);
     if (!list) {
       res.status(404).send("Not Found");
     }
@@ -110,7 +111,8 @@ router.delete("/deletelist/:id", fetchuser, async (req, res) => {
       return res.status(401).send("Not Allowed");
     }
 
-    list = await list.findByIdAndDelete(req.params.id);
+    list = await List.findByIdAndDelete(req.params.id);
+    console.log("delle",list);
     res.json({ Success: "list has been deleted", list: list });
   } catch (error) {
     console.error(error.message);
