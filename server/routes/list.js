@@ -30,7 +30,7 @@ router.post(
   ],
   async (req, res) => {
     try {
-      const { title, description, checked } = req.body;
+      const { title, description } = req.body;
       //if there are errors, returns bad request
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -40,7 +40,7 @@ router.post(
       const list = new List({
         title,
         description,
-        checked,
+        checked:false,
         user: req.user.id,
       });
       const savedlist = await list.save();

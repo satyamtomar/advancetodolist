@@ -40,7 +40,7 @@ const Card = ({todotab,taskObj, index, deleteTask, updateListArray,handlecheck})
     }
 
     const handleDelete = () => {
-        deleteTask(index)
+        deleteTask(taskObj)
     }
     
     return (

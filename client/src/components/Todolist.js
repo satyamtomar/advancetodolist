@@ -68,12 +68,23 @@ setNotes(newnotes);
       // setNotes(newnotess);
     
   };
-  const deleteTask = (index) => {
-    let tempList = taskList;
-    tempList.splice(index, 1);
-    localStorage.setItem("taskList", JSON.stringify(tempList));
-    setTaskList(tempList);
-    window.location.reload();
+  const deleteTask = async(obj) => {
+    const {_id,description,title,checked}=obj;
+    const response = await fetch(`${host}/api/list/deletelist/${_id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem('token'),
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+    const json = await response.json();
+         console.log(json)
+    //  //console.log("deleting the node"+id);
+    const newNotes = notes.filter((note) => {
+      return note._id !== _id;
+    });
+    setNotes(newNotes);
   };
 
   const updateListArray = async(obj, index) => {
@@ -115,12 +126,21 @@ setNotes(newnotes);
     setModal(!modal);
   };
 
-  const saveTask = (taskObj) => {
-    let tempList = taskList;
-    tempList.push(taskObj);
-    localStorage.setItem("taskList", JSON.stringify(tempList));
-    setTaskList(taskList);
-    setModal(false);
+  const saveTask = async(taskObj) => {
+    const {title,description}=taskObj;
+    
+    const response = await fetch(`${host}/api/list/addlist`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem('token'),
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify({ title, description }),
+    });
+    const note = await response.json();
+    setNotes(notes.concat(note));
+    
   };
 
   return (
