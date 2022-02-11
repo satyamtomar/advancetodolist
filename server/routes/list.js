@@ -66,7 +66,10 @@ router.put("/updatelist/:id", fetchuser, async (req, res) => {
     if (description) {
       newlist.description = description;
     }
-       newlist.checked = checked;
+        if(checked!==undefined )
+        {
+           newlist.checked = checked;
+        }
       
 
     //Find the list to be updated and update it
@@ -84,8 +87,9 @@ router.put("/updatelist/:id", fetchuser, async (req, res) => {
       { $set: newlist },
       { new: true }
     );
-    res.json({ list });
+    
     console.log({list});
+    res.json({ list });
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal server error");

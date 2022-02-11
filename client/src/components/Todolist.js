@@ -34,19 +34,35 @@ const TodoList = () => {
     fetchallnotes();
   }, []);
 
-  const handlecheck = async (title, description,checked,id) => {
-    const response = await fetch(`${host}/api/list/editlist/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: JSON.stringify({ title, description: description, checked: !checked }),
-    });
-    const jsonnn = await response.json();
-    console.log(jsonnn);
-    setNotes(jsonnn);
+  const handlecheck = async ({title, description,checked,_id}) => {
+    
+      const response = await fetch(`${host}/api/list/updatelist/${_id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem('token'),
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify({ title, description, checked: !checked }),
+      });
+        const jsonn= await response.json();
+      console.log(jsonn);
+  
+      let newnotess = JSON.parse(JSON.stringify(notes));
+      for (let index = 0; index < newnotess.length; index++) {
+        const element = newnotess[index];
+        if (element._id === _id) {
+          newnotess[index].title = title;
+  
+          newnotess[index].description = description;
+          newnotess[index].checked = checked;
+  
+          break;
+        }
+      }
+  
+      setNotes(newnotess);
+    
   };
   const deleteTask = (index) => {
     let tempList = taskList;
@@ -57,11 +73,33 @@ const TodoList = () => {
   };
 
   const updateListArray = (obj, index) => {
-    let tempList = taskList;
-    tempList[index] = obj;
-    localStorage.setItem("taskList", JSON.stringify(tempList));
-    setTaskList(tempList);
-    window.location.reload();
+    const response = await fetch(`${host}/api/list/updatelist/${_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem('token'),
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify({ title, description, checked: checked }),
+    });
+      const jsonn= await response.json();
+    console.log(jsonn);
+
+    let newnotess = JSON.parse(JSON.stringify(notes));
+    for (let index = 0; index < newnotess.length; index++) {
+      const element = newnotess[index];
+      if (element._id === _id) {
+        newnotess[index].title = title;
+
+        newnotess[index].description = description;
+        newnotess[index].checked = checked;
+
+        break;
+      }
+    }
+
+    setNotes(newnotess);
+  
   };
 
   const toggle = () => {
@@ -75,7 +113,6 @@ const TodoList = () => {
     setTaskList(taskList);
     setModal(false);
   };
-  const getallchecked = () => {};
 
   return (
     <>

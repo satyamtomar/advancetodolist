@@ -51,7 +51,7 @@ const Card = ({taskObj, index, deleteTask, updateListArray,handlecheck}) => {
                 </div>   
                 <div style={{"position": "absolute", "right" : "20px", "bottom" : "20px" }} className="space-x-3 flex flex-row justify-between mt-3">
                      {(!taskObj.checked)&&
-                        <BsCheckLg style={{"color":"green"}} onClick={handlecheck}></BsCheckLg>}
+                        <BsCheckLg style={{"color":"green"}} onClick={()=>{handlecheck(taskObj)}}></BsCheckLg>}
                      
                     <FaEdit class = "far fa-edit mr-3" style={{"color" : colors[index%5].primaryColor, "cursor" : "pointer"}} onClick = {() => setModal(true)}></FaEdit>
                     <MdDelete class="fas fa-trash-alt" style = {{"color" : colors[index%5].primaryColor, "cursor" : "pointer"}} onClick = {handleDelete}></MdDelete>
