@@ -4,7 +4,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 const EditTaskPopup = ({modal, toggle, updateTask, taskObj}) => {
     const [taskName, setTaskName] = useState('');
     const [description, setDescription] = useState('');
-
+    
     const handleChange = (e) => {
         
         const {name, value} = e.target
@@ -25,10 +25,11 @@ const EditTaskPopup = ({modal, toggle, updateTask, taskObj}) => {
 
     const handleUpdate = (e) => {
         e.preventDefault();
-        let tempObj = {}
-        tempObj['Name'] = taskName
-        tempObj['Description'] = description
+        let tempObj = {...taskObj}
+        tempObj['title'] = taskName;
+        tempObj['description'] = description;
         updateTask(tempObj)
+        toggle();
     }
 
     return (

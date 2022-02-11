@@ -3,7 +3,8 @@ import EditTask from './EditTask'
 import {FaEdit} from 'react-icons/fa'
 import {MdDelete} from 'react-icons/md'
 import {BsCheckLg} from "react-icons/bs"
-const Card = ({taskObj, index, deleteTask, updateListArray,handlecheck}) => {
+import {FaUndoAlt} from "react-icons/fa"
+const Card = ({todotab,taskObj, index, deleteTask, updateListArray,handlecheck}) => {
     const [modal, setModal] = useState(false);
 
     const colors = [
@@ -34,6 +35,7 @@ const Card = ({taskObj, index, deleteTask, updateListArray,handlecheck}) => {
     }
 
     const updateTask = (obj) => {
+        
         updateListArray(obj, index)
     }
 
@@ -50,11 +52,15 @@ const Card = ({taskObj, index, deleteTask, updateListArray,handlecheck}) => {
                 <p className = "mt-3 " style={{"word-wrap":"break-word",}}>{taskObj.description}</p>
                 </div>   
                 <div style={{"position": "absolute", "right" : "20px", "bottom" : "20px" }} className="space-x-3 flex flex-row justify-between mt-3">
-                     {(!taskObj.checked)&&
-                        <BsCheckLg style={{"color":"green"}} onClick={()=>{handlecheck(taskObj)}}></BsCheckLg>}
-                     
-                    <FaEdit class = "far fa-edit mr-3" style={{"color" : colors[index%5].primaryColor, "cursor" : "pointer"}} onClick = {() => setModal(true)}></FaEdit>
-                    <MdDelete class="fas fa-trash-alt" style = {{"color" : colors[index%5].primaryColor, "cursor" : "pointer"}} onClick = {handleDelete}></MdDelete>
+                     {(!taskObj.checked)?
+                        <BsCheckLg style={{"color":"green"}} onClick={()=>{handlecheck(taskObj,index)}}/>
+
+                        :
+                        <FaUndoAlt style={{"color":"green"}} onClick={()=>{handlecheck(taskObj,index)}}/>
+                        }
+                        <FaEdit className ={ `far fa-edit mr-3 ${taskObj.checked && "d-none" }`} style={{"color" : colors[index%5].primaryColor, "cursor" : "pointer"}} onClick = {() => setModal(true)}></FaEdit>
+                
+                    <MdDelete className="fas fa-trash-alt" style = {{"color" : colors[index%5].primaryColor, "cursor" : "pointer"}} onClick = {handleDelete}></MdDelete>
                 </div>
         </div>
         <EditTask modal = {modal} toggle = {toggle} updateTask = {updateTask} taskObj = {taskObj}/>

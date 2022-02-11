@@ -34,7 +34,7 @@ const TodoList = () => {
     fetchallnotes();
   }, []);
 
-  const handlecheck = async ({title, description,checked,_id}) => {
+  const handlecheck = async ({title, description,checked,_id},index) => {
     
       const response = await fetch(`${host}/api/list/updatelist/${_id}`, {
         method: "PUT",
@@ -48,20 +48,24 @@ const TodoList = () => {
         const jsonn= await response.json();
       console.log(jsonn);
   
-      let newnotess = JSON.parse(JSON.stringify(notes));
-      for (let index = 0; index < newnotess.length; index++) {
-        const element = newnotess[index];
-        if (element._id === _id) {
-          newnotess[index].title = title;
+      // let newnotess = JSON.parse(JSON.stringify(notes));
+      // for (let index = 0; index < newnotess.length; index++) {
+      //   const element = newnotess[index];
+      //   if (element._id === _id) {
+      //     newnotess[index].title = title;
   
-          newnotess[index].description = description;
-          newnotess[index].checked = checked;
+      //     newnotess[index].description = description;
+      //     newnotess[index].checked = checked;
   
-          break;
-        }
-      }
+      //     break;
+      //   }
+      // }
+
+      let newnotes = [...notes];
+newnotes[index].checked = jsonn.list.checked;
+setNotes(newnotes);
   
-      setNotes(newnotess);
+      // setNotes(newnotess);
     
   };
   const deleteTask = (index) => {
@@ -72,7 +76,8 @@ const TodoList = () => {
     window.location.reload();
   };
 
-  const updateListArray = (obj, index) => {
+  const updateListArray = async(obj, index) => {
+    const {_id,title,description,checked}=obj;
     const response = await fetch(`${host}/api/list/updatelist/${_id}`, {
       method: "PUT",
       headers: {
@@ -85,20 +90,24 @@ const TodoList = () => {
       const jsonn= await response.json();
     console.log(jsonn);
 
-    let newnotess = JSON.parse(JSON.stringify(notes));
-    for (let index = 0; index < newnotess.length; index++) {
-      const element = newnotess[index];
-      if (element._id === _id) {
-        newnotess[index].title = title;
+    // let newnotess = JSON.parse(JSON.stringify(notes));
+    // for (let index = 0; index < newnotess.length; index++) {
+    //   const element = newnotess[index];
+    //   if (element._id === _id) {
+    //     newnotess[index].title = title;
 
-        newnotess[index].description = description;
-        newnotess[index].checked = checked;
+    //     newnotess[index].description = description;
+    //     newnotess[index].checked = checked;
 
-        break;
-      }
-    }
+    //     break;
+    //   }
+    // // }
+    // setNotes(newnotess);
+  
 
-    setNotes(newnotess);
+    let newnotes=[...notes];
+    newnotes[index]=jsonn.list;
+    setNotes(newnotes);
   
   };
 
@@ -146,6 +155,7 @@ const TodoList = () => {
             if (obj.checked !== todotab) {
               return (
                 <Card
+                  todotab={todotab}
                   taskObj={obj}
                   index={index}
                   deleteTask={deleteTask}
