@@ -145,28 +145,30 @@ setNotes(newnotes);
 
   return (
     <>
-      <div className="header text-center">
-        <h3>Todo List</h3>
+     <div className="container flex flex-row justify-center bg-gray-200 rounded-lg">
+      <div className="    flex flex-col justify-between   py-8 px-8">
+        <img className=" h-20 w-24 " src="./todo.jpg"/>
         <button className="bg-gray-500 rounded-lg shadow-md shadow-sky-800/100 py-2 px-2 mt-2" onClick={() => setModal(true)}>
           Create Task
         </button>
       </div>
-      <div className="flex flex-row justify-center space-x-20 mb-2">
+      </div>
+      <div className="flex flex-row justify-center space-x-20 mb-16 mt-4">
         <button
-          className="bg-gray-500 rounded-lg shadow-md shadow-sky-800/100 py-2 px-2 "
+          className={` rounded-lg shadow-md shadow-sky-800/100 py-2 px-2 ${ (todotab===true)?"bg-gray-900 text-gray-200":"bg-gray-500"}`}
           onClick={() => {
             settodotab(true);
           }}
         >
-          todo
+          todotask
         </button>
         <button
-          className="bg-gray-500 rounded-lg shadow-md shadow-sky-800/100 py-2 px-2   "
+          className={` rounded-lg shadow-md shadow-sky-800/100 py-2 px-2 ${ (todotab===false  )?"bg-gray-900 text-gray-200":"bg-gray-500"}  `}
           onClick={() => {
             settodotab(false);
           }}
         >
-          completedlist
+          completedtask
         </button>
       </div>
       <div className=" grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 space-x-4 mx-2 my-2">

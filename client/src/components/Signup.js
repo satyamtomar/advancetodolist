@@ -39,7 +39,7 @@ const Signup = (props) => {
 
   return (
     <div className="flex flex-row md:pt-28 pt-10 mx-auto justify-center ">
-      <div className="bg-gray-500 border-3 border-gray-200 rounded-lg px-7 py-7 shadow-md shadow-cyan-500/100 justify-center text-gray-200">
+      <div className="bg-gray-700 border-3 border-gray-200 rounded-lg px-7 py-7 shadow-md shadow-cyan-500/100 justify-center text-gray-200">
         <div className="flex flex-row justify-center">
           <h1 className="py-2 text-4xl">Sign up </h1>
         </div>
