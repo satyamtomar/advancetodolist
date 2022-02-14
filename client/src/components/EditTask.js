@@ -12,9 +12,9 @@ const EditTaskPopup = ({modal, toggle, updateTask, taskObj}) => {
         if(name === "taskName"){
             setTaskName(value)
         }else{
-        }
+        
         setDescription(value)
-
+        }
 
     }
 
