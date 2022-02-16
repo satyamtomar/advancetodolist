@@ -3,18 +3,36 @@ const { validationResult, body } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const jwtsecret = "satyamtomar";
-
+const Joi= require("joi");
 //Route1 Creating a user using: POST "/api/auth/createuser".Doesn't require Login
 module.exports = {
   createuser: async (req, res) => {
+    try {
+    const schema=Joi.object({
+      name: Joi.string()
+      .alphanum()
+      .min(2)
+      .max(30)
+      .required(),
+    
+
+  password: Joi.string()
+      .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
+
+
+  email: Joi.string()
+      .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+    })
+    const result=await schema.validateAsync(req.body);
+    console.log(result);
     let success = false;
     const errors = validationResult(req);
-    //if there are errors, returns bad request
+    // if there are errors, returns bad request
     if (!errors.isEmpty()) {
       return res.status(400).json({ success, errors: errors.array() });
     }
     //checks whether the email has already been created
-    try {
+    
       let user = await User.findOne({ email: req.body.email });
       if (user) {
         return res.status(400).json({
@@ -42,6 +60,10 @@ module.exports = {
       const authtoken = jwt.sign(data, jwtsecret);
       res.json({ success, authtoken });
     } catch (error) {
+      if(error.isJoi)
+      {
+        res.status(400).send("Joi server error");
+      }
       console.error(error.message);
       res.status(500).send("Internal server error");
     }
@@ -49,14 +71,28 @@ module.exports = {
 
   login: async (req, res) => {
     let success = false;
-    const errors = validationResult(req);
-    //if there are errors, returns bad request
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { email, password } = req.body;
+    // const errors = validationResult(req);
+    // //if there are errors, returns bad request
+    // if (!errors.isEmpty()) {
+    //   return res.status(400).json({ errors: errors.array() });
+    // }
     try {
+    const { email, password } = req.body;
+    
+      const schema=Joi.object({
+       
+      
+  
+    password: Joi.string()
+        .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
+  
+  
+    email: Joi.string()
+        .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+      })
+      const result=await schema.validateAsync(req.body);
+     
+      
       let user = await User.findOne({ email });
       if (!user)
         return res
@@ -77,6 +113,10 @@ module.exports = {
       success = true;
       res.json({ success, authtoken });
     } catch (error) {
+      if(error.isJoi)
+      {
+        res.status(400).send("Joi server error");
+      }
       console.error(error.message);
       res.status(500).send("Internal server error");
     }

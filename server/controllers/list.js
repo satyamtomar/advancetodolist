@@ -5,7 +5,6 @@ module.exports = {
   fetchlist: async (req, res) => {
     try {
       const lists = await List.find({ user: req.user.id });
-      console.log(lists, "backend");
       res.json(lists);
     } catch (err) {
       console.error(error.message);
@@ -69,7 +68,7 @@ module.exports = {
         { new: true }
       );
 
-      console.log({ list });
+    //   console.log({ list });
       res.json({ list });
     } catch (error) {
       console.error(error.message);
@@ -81,7 +80,7 @@ module.exports = {
     try {
       //Find the list to be deleted and delete it
       let list = await List.findById(req.params.id);
-      console.log("helloo delete", list);
+    //   console.log("helloo delete", list);
       if (!list) {
         res.status(404).send("Not Found");
       }
@@ -92,7 +91,7 @@ module.exports = {
       }
 
       list = await List.findByIdAndDelete(req.params.id);
-      console.log("delle", list);
+    //   console.log("delle", list);
       res.json({ Success: "list has been deleted", list: list });
     } catch (error) {
       console.error(error.message);
